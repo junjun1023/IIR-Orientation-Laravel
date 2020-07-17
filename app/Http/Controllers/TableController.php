@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Console\Migrations\ResetCommand;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Movie;
@@ -16,10 +17,24 @@ class TableController extends Controller {
 
     public function selectMovieByIdWithResource(Request $request) {
         $user_id = $request->input('user_id');
-        $movies = Rating::where('user_id', $user_id)->get();
-        return RatingResource::collection($movies);
+        $models = Rating::where('user_id', $user_id)->get();
+        return RatingResource::collection($models);
     }
 
+    public function insertRatingWithModel(Request $request) {
+        $model = new Rating();
+        $model->user_id = $request->input('user_id');
+        $model->movie_id = $request->input('movie_id');
+        $model->rating = $request->input('rating');
+        $model->save();
+        # 'Make' instead of 'collection', why?
+        return RatingResource::make($model);
+    }
 
-
+    public function deleteRatingWithModel(Request $request) {
+        $user_id = $request->input('user_id');
+        $movie_id = $request->input('model_id');
+        $rating = $request->input('rating');
+        $model = Rating::find()
+    }
 }

@@ -17,5 +17,5 @@ Route::get('/', function () {
 });
 
 Route::post('/user_id', 'TableController@selectMovieByIdWithResource');
-
+Route::post('/add_rating', 'TableController@insertRatingWithModel');
 
