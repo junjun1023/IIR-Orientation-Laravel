@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Route::post('/user_id', 'TableController@selectMovieByIdWithResource');
-Route::post('/add_rating', 'TableController@insertRatingWithModel');
+Route::get('/', 'TableController@selectMovieByIdWithResource');
+Route::post('/rating/insert', 'TableController@insertRatingWithModel');
+Route::post('/rating/delete', 'TableController@deleteRatingWithModel');
+Route::post('/rating/update', 'TableController@updateRatingWithModel');
 

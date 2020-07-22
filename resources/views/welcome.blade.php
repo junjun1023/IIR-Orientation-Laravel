@@ -24,76 +24,99 @@
                 height: 100vh;
             }
 
-
             .flex-center {
                 align-items: center;
                 display: flex;
-                justify-content: center;
+                justify-content: space-evenly;
             }
 
             .position-ref {
                 position: relative;
             }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
+            .table-scroll {
+                height: 150px;
+                overflow-y: scroll;
+                margin-top: 20px;
+                display: block;
+                border-collapse: collapse;
+                /*border: 3px black solid;*/
+
             }
 
-            .content {
-                text-align: center;
+            .table-scroll thead th {
+                position: sticky;
+                top: 0;
             }
 
-            .title {
-                font-size: 84px;
+            th {
+                background: #d8d8d8;
+                border: 3px white solid;
             }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
+            td {
+                background: #ededed;
+                border: 3px white solid;
             }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
+
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+            <div>
+                <form method="post">
+                    <fieldset>
+                        <legend>電影評分</legend>
 
-            <form>
-                <fieldset>
-                    <legend>電影評分</legend>
+                        <p>
+                            <label for="user_id">使用者ID</label>
+                            <input type="text" id="user_id">
+                        </p>
 
-                    <p>
-                        <label for="user_id">使用者ID</label>
-                        <input type="text" id="user_id">
-                    </p>
+                        <p>
+                            <label for="movie_id">電影ID</label>
+                            <input type="text" id="movie_id">
+                        </p>
 
-                    <p>
-                        <label for="movie_id">電影ID</label>
-                        <input type="text" id="movie_id">
-                    </p>
+                        <p>
+                            <label for="rating_id">評分</label>
+                            <input type="text" id="movie_id">
+                        </p>
 
-                    <p>
-                        <label for="rating_id">評分</label>
-                        <input type="text" id="movie_id">
-                    </p>
+                        <p>
+                            <input type="button" name="Search" value="查詢">
+                            <input type="button" name="Insert" value="新增/更新">
+                            <input type="button" name="Delete" value="刪除">
+                        </p>
 
-                    <p>
-                        <input type="button" value="新增/查詢" onclick="">
-                        <input type="button" value="刪除">
-                    </p>
+                    </fieldset>
+                </form>
+            </div>
 
-                </fieldset>
-            </form>
+            <div>
+                <table class="table-scroll" cellspacing="5" cellpadding="5">
+                    <thead>
+                    <tr>
+                        <th>User ID</th><th>Movie ID</th><th>Rating</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($ratings as $rating)
+                        <tr>
+                            <td>{{$rating['user_id']}}</td>
+                            <td>{{$rating['movie_id']}}</td>
+                            <td>{{$rating['rating']}}</td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+
+
+                </table>
+            </div>
 
         </div>
+
     </body>
 </html>

@@ -10,7 +10,7 @@ use App\Rating;
 use App\Http\Resources\MovieResource;
 use App\Http\Resources\RatingResource;
 use App\Http\Resources\RatWithMovieResource;
-
+use Illuminate\View\View;
 
 
 class TableController extends Controller {
@@ -18,23 +18,44 @@ class TableController extends Controller {
     public function selectMovieByIdWithResource(Request $request) {
         $user_id = $request->input('user_id');
         $models = Rating::where('user_id', $user_id)->get();
-        return RatingResource::collection($models);
+        return view('welcome', ['ratings'=>$models]);
     }
 
     public function insertRatingWithModel(Request $request) {
         $model = new Rating();
-        $model->user_id = $request->input('user_id');
+        $user_id = $request->input('user_id');
+        $model->user_id = $user_id;
         $model->movie_id = $request->input('movie_id');
         $model->rating = $request->input('rating');
         $model->save();
+
+        #dd($model);
+        #$user_id = $request->input('user_id');
+        #$models = Rating::where('user_id', $user_id)->get();
+        #return RatingResource::collection($models);
         # 'Make' instead of 'collection', why?
-        return RatingResource::make($model);
+        $models = Rating::where('user_id', $user_id)->get();
+        return view('welcome', ['ratings'=>$models]);
     }
 
     public function deleteRatingWithModel(Request $request) {
         $user_id = $request->input('user_id');
-        $movie_id = $request->input('model_id');
-        $rating = $request->input('rating');
-        $model = Rating::find()
+        $movie_id = $request->input('movie_id');
+        $model = Rating::where('user_id', $user_id)
+            -> where('movie_id', $movie_id)
+            -> delete();
+        #$model->delete();
     }
+
+    public function updateRatingWithModel(Request $request) {
+        $user_id = $request->input('user_id');
+        $movie_id = $request->input('movie_id');
+        $rating = $request->input('rating');
+        $model = Rating::where('user_id', $user_id)
+            -> where('movie_id', $movie_id)
+            -> update(['rating'=>$rating]);
+        #return RatingResource::collection($model);
+    }
+
+
 }

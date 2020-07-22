@@ -13,6 +13,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/user_id',
-        '/add_rating'
+        '/rating/insert',
+        '/rating/delete',
+        '/rating/update'
     ];
 }
