@@ -65,29 +65,32 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div>
-                <form method="post">
+                <form action="" method="post">
+{{--                    {{ csrf_field() }}--}}
                     <fieldset>
                         <legend>電影評分</legend>
 
                         <p>
                             <label for="user_id">使用者ID</label>
-                            <input type="text" id="user_id">
+                            <input type="text" placeholder="user id" name="user_id">
                         </p>
 
-                        <p>
-                            <label for="movie_id">電影ID</label>
-                            <input type="text" id="movie_id">
-                        </p>
+{{--                        <p>--}}
+{{--                            <label for="movie_id">電影ID</label>--}}
+{{--                            <input type="text" name="movie_id" placeholder="movie id">--}}
+{{--                        </p>--}}
+
+{{--                        <p>--}}
+{{--                            <label for="rating_id">評分</label>--}}
+{{--                            <input type="text" name="rating_id" placeholder="rating">--}}
+{{--                        </p>--}}
 
                         <p>
-                            <label for="rating_id">評分</label>
-                            <input type="text" id="movie_id">
-                        </p>
+                            <input type="submit" name="submit">
+{{--                            <input type="submit" name="submit" value="Insert/Update">--}}
+{{--                            <input type="submit" name="submit" value="Delete">--}}
+{{--                            <button>Search</button>--}}
 
-                        <p>
-                            <input type="button" name="Search" value="查詢">
-                            <input type="button" name="Insert" value="新增/更新">
-                            <input type="button" name="Delete" value="刪除">
                         </p>
 
                     </fieldset>
@@ -104,9 +107,9 @@
                     <tbody>
                     @foreach($ratings as $rating)
                         <tr>
-                            <td>{{$rating['user_id']}}</td>
-                            <td>{{$rating['movie_id']}}</td>
-                            <td>{{$rating['rating']}}</td>
+                            <td>{{$rating->user_id}}</td>
+                            <td>{{$rating->movie_id}}</td>
+                            <td>{{$rating->rating}}</td>
                         </tr>
                     @endforeach
 

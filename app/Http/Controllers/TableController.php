@@ -22,12 +22,21 @@ class TableController extends Controller {
     }
 
     public function insertRatingWithModel(Request $request) {
-        $model = new Rating();
         $user_id = $request->input('user_id');
-        $model->user_id = $user_id;
-        $model->movie_id = $request->input('movie_id');
-        $model->rating = $request->input('rating');
-        $model->save();
+        $movie_id = $request->input('movie_id');
+        $rating = $request->input('rating');
+        if (Rating::where('user_id', $user_id)->exists()) {
+            Rating::where('user_id', $user_id)
+                -> where('movie_id', $movie_id)
+                -> update(['rating'=>$rating]);
+        } else {
+            $model = new Rating();
+            $model->user_id = $user_id;
+            $model->movie_id = $movie_id;
+            $model->rating = $rating;
+            $model->save();
+        }
+
 
         #dd($model);
         #$user_id = $request->input('user_id');
@@ -44,7 +53,8 @@ class TableController extends Controller {
         $model = Rating::where('user_id', $user_id)
             -> where('movie_id', $movie_id)
             -> delete();
-        #$model->delete();
+        $models = Rating::where('user_id', $user_id)->get();
+        return view('welcome', ['ratings'=>$models]);
     }
 
     public function updateRatingWithModel(Request $request) {
