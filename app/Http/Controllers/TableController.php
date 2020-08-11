@@ -11,6 +11,7 @@ use App\Http\Resources\MovieResource;
 use App\Http\Resources\RatingResource;
 use App\Http\Resources\RatWithMovieResource;
 use Illuminate\View\View;
+use Log;
 
 
 class TableController extends Controller {
@@ -25,11 +26,23 @@ class TableController extends Controller {
         $user_id = $request->input('user_id');
         $movie_id = $request->input('movie_id');
         $rating = $request->input('rating');
-        if (Rating::where('user_id', $user_id)->exists()) {
+        Log::debug($user_id);
+        Log::debug($movie_id);
+        Log::debug($rating);
+        if (Rating::where('user_id', $user_id)
+            ->where('movie_id', $movie_id)
+            ->exists()) {
+            Log::debug("exists");
             Rating::where('user_id', $user_id)
                 -> where('movie_id', $movie_id)
                 -> update(['rating'=>$rating]);
+//            $model = new Rating();
+//            $model->user_id = $user_id;
+//            $model->movie_id = $movie_id;
+//            $model->rating = $rating;
+//            $model->save();
         } else {
+            Log::debug("not exists");
             $model = new Rating();
             $model->user_id = $user_id;
             $model->movie_id = $movie_id;
@@ -44,7 +57,9 @@ class TableController extends Controller {
         #return RatingResource::collection($models);
         # 'Make' instead of 'collection', why?
         $models = Rating::where('user_id', $user_id)->get();
-        return view('welcome', ['ratings'=>$models]);
+        #dd($models);
+        #return view('welcome', ['ratings'=>$models]);
+        return Response(['ratings'=>$models]);
     }
 
     public function deleteRatingWithModel(Request $request) {
@@ -54,7 +69,8 @@ class TableController extends Controller {
             -> where('movie_id', $movie_id)
             -> delete();
         $models = Rating::where('user_id', $user_id)->get();
-        return view('welcome', ['ratings'=>$models]);
+        #return view('welcome', ['ratings'=>$models]);
+        return Response(['ratings'=>$models]);
     }
 
     public function updateRatingWithModel(Request $request) {

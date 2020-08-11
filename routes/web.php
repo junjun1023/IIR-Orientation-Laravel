@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::post('/rating/insert', 'TableController@insertRatingWithModel');
-Route::post('/rating/delete', 'TableController@deleteRatingWithModel');
+Route::post('/rating/insert/', 'TableController@insertRatingWithModel');
+Route::post('/rating/delete/', 'TableController@deleteRatingWithModel');
 Route::post('/', 'TableController@selectMovieByIdWithResource');
 Route::get('/', 'TableController@selectMovieByIdWithResource');
 //Route::post('/rating/update', 'TableController@updateRatingWithModel');
